@@ -94,13 +94,13 @@ document.querySelector("#name").addEventListener("input", async (e) => {
   }
 
   // If username already exists
-  if (data.length > 0 || username === '') {
+  if (data.length > 0) {
     usernameCheck.innerHTML = "Username is already taken!";
     usernameCheck.style.color = "red";
+    username_found = true;
   } else {
     usernameCheck.innerHTML = "Username is available!";
     usernameCheck.style.color = "green";
-    username_found=true;
   }
 });
 
@@ -151,7 +151,6 @@ signUpBtn.addEventListener("click", async (e) => {
       // Username is available, allow adding
       usernameCheck.innerHTML = "Username is available!";
       usernameCheck.style.color = "green";
-      username_found= true;
     }
   }
   await checkUsername(); //Checking username
@@ -237,16 +236,14 @@ signUpBtn.addEventListener("click", async (e) => {
 
   async function signUp() {
     if (!username_found) {
-     
-        let { data, error } = await supabase
-          .from("AuthPage")
-          .insert([{ name: name, password: password }]);
+      let { data, error } = await supabase
+        .from("AuthPage")
+        .insert([{ name: name, password: password }]);
 
-        location.reload();
-       
+      location.reload();
     }
   }
-
+  // await signUp();
   signUpBtn.addEventListener("click", signUp);
 });
 
