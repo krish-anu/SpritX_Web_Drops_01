@@ -125,6 +125,14 @@ signUpBtn.addEventListener("click", async (e) => {
     return;
   }
 
+  // Password validation
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    passwordCheck.innerHTML = "Enter valid password.";
+    passwordCheck.style.color = "red";
+    return;
+  }
+
   // Check the availability of the username in the database
   const { data, error } = await supabase
     .from("AuthPage") // Table name
@@ -215,63 +223,7 @@ signIn.addEventListener("click", async (e) => {
       loginMessage.innerHTML = "Incorrect username or password!";
       loginMessage.style.color = "red";
     }
+    document.getElementById("loginUser").innerHTML = username;
   }
   await login();
 });
-
-//.............................................................
-// const editStudent = async (id) => {
-//   const res = await database.from("AuthPage").select("*").eq("id", id);
-//   if (res) {
-//     document.getElementById("id").value = res.data[0].id;
-//     document.getElementById("edit-name").value = res.data[0].name;
-//     document.getElementById("edit-age").value = res.data[0].age;
-//     document.getElementById("edit-country").value = res.data[0].country;
-//   }
-// };
-//..............................................................................
-// const update = document.getElementById("update");
-
-// update.addEventListener("click", async () => {
-//   let id = document.getElementById("id").value;
-//   let name = document.getElementById("edit-name").value;
-//   let age = document.getElementById("edit-age").value;
-//   let country = document.getElementById("edit-country").value;
-//   update.innerText = "Updateing....";
-//   update.setAttribute("disabled", true);
-//   const res = await database
-//     .from("students")
-//     .update({
-//       name,
-//       age,
-//       country,
-//     })
-//     .eq("id", id);
-
-//   if (res) {
-//     alert("Student Update Successfully");
-//     update.innerText = "Update";
-//     update.setAttribute("disabled", false);
-//     name = "";
-//     age = "";
-//     country = "";
-//     getStudent();
-//     getTotalCount();
-//   } else {
-//     alert("Student Not Update Successfully");
-//     update.innerText = "Update";
-//     update.setAttribute("disabled", false);
-//   }
-// });
-//.........................................................................................
-// const deleteStudent = async (id) => {
-//   const res = await database.from("students").delete().eq("id", id);
-
-//   if (res) {
-//     alert("Delete successfully");
-//     getStudent();
-//     getTotalCount();
-//   } else {
-//     alert("Delete successfully");
-//   }
-// };

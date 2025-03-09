@@ -3,15 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome Page</title>
-    <link rel="icon" href="assets/—Pngtree—user vector avatar_4830521.png" type="image/png">
-
+    <title>Your App</title>
+    <link
+      rel="icon"
+      href="assets/—Pngtree—user vector avatar_4830521.png"
+      type="image/png"
+    />
     <link rel="stylesheet" href="Landing Page.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   </head>
   <body>
     <a href="index.html"> <button class="logout-btn">Logout</button></a>
     <div class="container">
-      <h1>Welcome , User!</h1>
+      <h1>Welcome <span id="loginUser"></span>!</h1>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
