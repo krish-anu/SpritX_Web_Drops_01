@@ -94,12 +94,13 @@ document.querySelector("#name").addEventListener("input", async (e) => {
   }
 
   // If username already exists
-  if (data.length > 0) {
+  if (data.length > 0 || username === '') {
     usernameCheck.innerHTML = "Username is already taken!";
     usernameCheck.style.color = "red";
   } else {
     usernameCheck.innerHTML = "Username is available!";
     usernameCheck.style.color = "green";
+    username_found=true;
   }
 });
 
@@ -112,7 +113,7 @@ signUpBtn.addEventListener("click", async (e) => {
   let passwordCheck = document.getElementById("passwordCheck");
 
   if (name === "" || password === "" || confirmPassword === "") {
-    passwordCheck.innerHTML = "You must enter password";
+    passwordCheck.innerHTML = "Invalid SignUp";
     return;
   }
   async function checkUsername() {
@@ -150,6 +151,7 @@ signUpBtn.addEventListener("click", async (e) => {
       // Username is available, allow adding
       usernameCheck.innerHTML = "Username is available!";
       usernameCheck.style.color = "green";
+      username_found= true;
     }
   }
   await checkUsername(); //Checking username
@@ -234,8 +236,6 @@ signUpBtn.addEventListener("click", async (e) => {
   //   };
 
   async function signUp() {
-    let username_found = false; // Replace with actual username check logic
-
     if (!username_found) {
      
         let { data, error } = await supabase
