@@ -1,13 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    
+    <link rel="icon" href="assets/—Pngtree—user vector avatar_4830521.png" type="image/png">
+
+    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Sign-up | Log-in Page</title>
   </head>
+
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="container" id="container">
+
+      
+      <div class="input-box sign-up">
+        
+        <form>
+          <h1>Create Account</h1>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name"
+            required
+          />
+          <p id="usernameCheck"></p>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            required
+          />
+          <p id="passwordCheck" style="color: red"></p>
+          <button class="input" type="submit" id="signUp" >Sign Up</button>
+        
+
+          <!-- <span>or signin with </span> -->
+          <!-- <div class="social-icons">
+            <a href="#" class="icon"
+              ><i class="fa-brands fa-google-plus-g"></i
+            ></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-twitter"></i></a>
+          </div> -->
+        </form>
+      </div>
+      <div class="input-box sign-in">
+        <form>
+          <h1>Sign In</h1>
+          <input type="text" placeholder="Name" id="_name" required/>
+          <input type="password" placeholder="Password" id="_password" required />
+          <!-- <a href="#">Forget Your Password?</a> -->
+          <button class="input" type="submit" id="signIn" >Sign In</button>
+          <p id="loginMessage"></p>
+          <!-- <span>or signup with</span> -->
+          <!-- <div class="social-icons">
+            <a href="#" class="icon"
+              ><i class="fa-brands fa-google-plus-g"></i
+            ></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-twitter"></i></a>
+          </div> -->
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <div id="tbody"></div>
+            <div id="loading"></div>
+            <h1>Welcome Back!</h1>
+            <p>Already have an account?</p>
+            <!-- this is inside blue box -->
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Hello, Welcome!</h1>
+            <p>Don't have an account?</p>
+            <button class="hidden" id="register">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="script.js" defer></script>
   </body>
 </html>

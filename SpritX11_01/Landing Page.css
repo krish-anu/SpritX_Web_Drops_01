@@ -11,8 +11,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(Background.png);
+    background-image: url(assets/Background.jpeg);
     background-repeat: no-repeat;
+    background-size: cover; /* Make the background image cover the entire body */
+    background-position: center;
 }
 
 .container {
