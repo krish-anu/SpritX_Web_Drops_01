@@ -107,154 +107,67 @@ document.querySelector("#name").addEventListener("input", async (e) => {
 signUpBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
-  let name = document.querySelector("#name").value;
-  let password = document.querySelector("#password").value;
-  let confirmPassword = document.querySelector("#confirmPassword").value;
+  let name = document.querySelector("#name").value.trim();
+  let password = document.querySelector("#password").value.trim();
+  let confirmPassword = document.querySelector("#confirmPassword").value.trim();
   let passwordCheck = document.getElementById("passwordCheck");
+  let usernameCheck = document.getElementById("usernameCheck");
 
   if (name === "" || password === "" || confirmPassword === "") {
     passwordCheck.innerHTML = "Invalid SignUp";
+    passwordCheck.style.color = "red";
     return;
   }
-  async function checkUsername() {
-    let username = name.trim();
-    let usernameCheck = document.getElementById("usernameCheck");
 
-    if (username === "") {
-      usernameCheck.innerHTML = "Username cannot be empty!";
-      usernameCheck.style.color = "red";
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from("AuthPage") // Table name
-      .select("name") // Column name
-      .eq("name", username); // Check if username exists
-
-    // console.log(data);
-
-    if (error) {
-      console.error("Error fetching username:", error);
-      usernameCheck.innerHTML = "Error checking username. Try again.";
-      usernameCheck.style.color = "red";
-      return;
-    }
-
-    if (data.length > 0) {
-      // Username already exists, prevent adding
-      username_found = true;
-      usernameCheck.innerHTML = "Username is already taken!";
-      usernameCheck.style.color = "red";
-      console.log("hi", username_found);
-      return;
-    } else {
-      // Username is available, allow adding
-      usernameCheck.innerHTML = "Username is available!";
-      usernameCheck.style.color = "green";
-    }
-  }
-  await checkUsername(); //Checking username
   if (password !== confirmPassword) {
     passwordCheck.innerHTML = "*Passwords do not match!";
+    passwordCheck.style.color = "red";
     return;
   }
-  //..........................................................................
-  //password validation
 
-  //   When the user starts to type something inside the password field
-  // password.onkeyup = function () {
-  //   let lowerCaseLetters = /[a-z]/g;
-  //   let l_valid;
-  //   if (password.value.match(lowerCaseLetters)) {
-  //     l_valid = true;
-  //   }
+  // Check the availability of the username in the database
+  const { data, error } = await supabase
+    .from("AuthPage") // Table name
+    .select("name") // Column name
+    .eq("name", name); // Check if username exists
 
-  //   // Validate capital letters
-  //   let upperCaseLetters = /[A-Z]/g;
-  //   let u_valid;
-  //   if (password.value.match(upperCaseLetters)) {
-  //     u_valid = true;
-  //   }
-
-  //   // Validate numbers
-  //   let specialCharacters = /[!@#$%^&*(),.?":{}|<>]/g; // Regular expression for special characters
-  //   let s_valid;
-  //   if (password.value.match(specialCharacters)) {
-  //     s_valid = true;
-  //   }
-
-  //   // Validate length
-  //   let len_valid;
-  //   if (password.value.length >= 8) {
-  //     len_valid = true;
-  //   }
-
-  //   if (l_valid && s_valid && u_valid && len_valid) {
-  //     valid = true; // Enable Sign In button
-  //   } else {
-  //     passwordCheck.innerHTML = "Enter the valid password";
-  //   }
-  // };
-
-  //let password = document.getElementById("password");
-  //let passwordCheck = document.getElementById("passwordCheck");
-  //let password = document.getElementById("password");
-  //let passwordCheck = document.getElementById("passwordCheck");
-  //   let signUpBtn = document.getElementById("signUpBtn");
-  //,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  //   let valid = false; // Initialize valid as false
-
-  //   password.onkeyup = function () {
-  //     let lowerCaseLetters = /[a-z]/;
-  //     let upperCaseLetters = /[A-Z]/;
-  //     let specialCharacters = /[!@#$%^&*(),.?":{}|<>]/;
-
-  //     let messages = [];
-  //     let l_valid = lowerCaseLetters.test(password.value);
-  //     let u_valid = upperCaseLetters.test(password.value);
-  //     let s_valid = specialCharacters.test(password.value);
-  //     let len_valid = password.value.length >= 8;
-
-  //     if (!l_valid) messages.push("At least one lowercase letter.");
-  //     if (!u_valid) messages.push("At least one uppercase letter.");
-  //     if (!s_valid) messages.push("At least one special character.");
-  //     if (!len_valid) messages.push("Minimum length of 8 characters.");
-
-  //     if (l_valid && u_valid && s_valid && len_valid) {
-  //       valid = true;
-  //       passwordCheck.innerHTML = "Password is valid!";
-  //       passwordCheck.style.color = "green";
-  //     } else {
-  //       valid = false;
-  //       passwordCheck.innerHTML = messages.join("<br>");
-  //       passwordCheck.style.color = "red";
-  //     }
-
-  //     // Enable/Disable the button based on validation
-  //     signUpBtn.disabled = !valid;
-  //   };
-
-  async function signUp() {
-    if (!username_found) {
-      const { data, error } = await supabase
-        .from("AuthPage")
-        .insert([{ "name": name, "password": password }]);
-
-      if (error) {
-        console.error("Error fetching user data:", error);
-        loginMessage.innerHTML = "Error checking login. Try again.";
-        loginMessage.style.color = "red";
-        return;
-      }
-
-      // Reset username_found to false after successful sign-up
-      username_found = false;
-      location.reload();
-    }
+  if (error) {
+    console.error("Error fetching username:", error);
+    usernameCheck.innerHTML = "Error checking username. Try again.";
+    usernameCheck.style.color = "red";
+    return;
   }
-  await signUp();
 
-  
+  if (data.length > 0) {
+    usernameCheck.innerHTML = "Username is already taken!";
+    usernameCheck.style.color = "red";
+    username_found = true;
+    return;
+  } else {
+    usernameCheck.innerHTML = "Username is available!";
+    usernameCheck.style.color = "green";
+    username_found = false;
+  }
+
+  // Proceed with sign-up if username is not found
+  if (!username_found) {
+    const { data, error } = await supabase
+      .from("AuthPage")
+      .insert([{ name: name, password: password }]);
+
+    if (error) {
+      console.error("Error signing up:", error);
+      passwordCheck.innerHTML = "Error signing up. Try again.";
+      passwordCheck.style.color = "red";
+      return;
+    }
+
+    // Reset username_found to false after successful sign-up
+    username_found = false;
+    passwordCheck.innerHTML = "Sign-up successful!";
+    passwordCheck.style.color = "green";
+    location.reload();
+  }
 });
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
