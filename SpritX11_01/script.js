@@ -214,6 +214,9 @@ signIn.addEventListener("click", async (e) => {
       loginMessage.innerHTML = "Login successful! Redirecting...";
       loginMessage.style.color = "green";
 
+      // Store the username in localStorage
+      localStorage.setItem("username", username);
+
       // Redirect to dashboard or another page after login
       setTimeout(() => {
         window.location.href = "LandingPage.html"; // Change URL as needed
@@ -224,6 +227,7 @@ signIn.addEventListener("click", async (e) => {
       loginMessage.style.color = "red";
     }
     document.getElementById("loginUser").innerHTML = username;
+    console.log(username);
   }
   await login();
 });

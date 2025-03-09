@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your App</title>
+    <title>Landing Page</title>
     <link
       rel="icon"
       href="assets/—Pngtree—user vector avatar_4830521.png"
@@ -18,5 +18,14 @@
       <h1>Welcome <span id="loginUser"></span>!</h1>
     </div>
     <script src="script.js"></script>
+    <script>
+      // Retrieve the username from localStorage
+      const username = localStorage.getItem("username");
+
+      // Set the username to the span tag
+      if (username) {
+        document.getElementById("loginUser").innerText = username;
+      }
+    </script>
   </body>
 </html>
