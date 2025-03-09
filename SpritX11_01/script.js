@@ -236,15 +236,25 @@ signUpBtn.addEventListener("click", async (e) => {
 
   async function signUp() {
     if (!username_found) {
-      let { data, error } = await supabase
+      const { data, error } = await supabase
         .from("AuthPage")
-        .insert([{ name: name, password: password }]);
+        .insert([{ "name": name, "password": password }]);
 
+      if (error) {
+        console.error("Error fetching user data:", error);
+        loginMessage.innerHTML = "Error checking login. Try again.";
+        loginMessage.style.color = "red";
+        return;
+      }
+
+      // Reset username_found to false after successful sign-up
+      username_found = false;
       location.reload();
     }
   }
-  // await signUp();
-  signUpBtn.addEventListener("click", signUp);
+  await signUp();
+
+  
 });
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
